@@ -7,6 +7,7 @@ workflows:
   heroku_deploy:
     jobs:
       - build
+      - test
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
           requires:
             - build
@@ -17,14 +18,23 @@ workflows:
 jobs:
   build:
     docker:
-      - image: circleci/node:10.16.3
-    working_directory: ~/demo
+      - image: gradle:alpine
     steps:
       - checkout
-      # install dependencies
-      #- run:
-       #   name: Install Dependencies
-        #  command: npm install
-      - run:
-          name: Build
-          command: npm run build
+      - run: ./gradlew bootJar
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - build/
+            - .gradle/
+
+  test:
+    docker:
+      - image: gradle:alpine
+    steps:
+      - checkout
+      - run: ./gradlew test
+      - store_test_results:
+          path: build/test-results
+      - store_artifacts:
+          path: build/test-results
