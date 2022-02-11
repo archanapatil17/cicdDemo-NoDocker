@@ -20,7 +20,7 @@ workflows:
               only: master
       - deploy
           requires:
-            -heroku/deploy-via-git:::
+            -heroku/deploy-via-git:
 
 jobs:
   build:
