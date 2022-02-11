@@ -8,9 +8,6 @@ workflows:
     jobs:
       - build
       - test
-      - postdeploy
-          requires:
-            - heroku/deploy-via-git:
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
           #post-steps:
            # - run:
@@ -21,8 +18,9 @@ workflows:
           filters:
             branches:
               only: master
-      - postdeploy
-
+      - deploy
+          requires:
+            -heroku/deploy-via-git:::
 
 jobs:
   build:
@@ -48,7 +46,7 @@ jobs:
       - store_artifacts:
           path: build/test-results
 
-  postdeploy:
+  deploy:
     docker:
       - image: cimg/openjdk:17.0.1
     steps:
