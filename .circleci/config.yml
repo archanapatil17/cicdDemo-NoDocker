@@ -8,19 +8,20 @@ workflows:
     jobs:
       - build
       - test
-      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
+      - deploy
+           requires:
+          - build
+      #- heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
           #post-steps:
            # - run:
             #   name : Run Application
              #  command: java -Xmx512m -Xms256m -jar demo-0.0.1-SNAPSHOT.jar
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
-      - deploy
-          requires:
-            -heroku/deploy-via-git:
+       #   requires:
+        #    - build
+         # filters:
+          #  branches:
+           #   only: master
+
 
 jobs:
   build:
@@ -50,6 +51,10 @@ jobs:
     docker:
       - image: cimg/openjdk:17.0.1
     steps:
+      - heroku/deploy-via-git:
+          filters:
+              branches:
+                only: master
       - run:
           name: Run Application
           command: java -Xmx512m -Xms256m -jar demo-0.0.1-SNAPSHOT.jar
