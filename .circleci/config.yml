@@ -8,6 +8,9 @@ workflows:
     jobs:
       - build
       - test
+      - postdeploy
+          requires:
+            - heroku/deploy-via-git:
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
           #post-steps:
            # - run:
