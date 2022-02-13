@@ -7,7 +7,9 @@ workflows:
   heroku_deploy:
     jobs:
       - build
-      #- test
+      - test:
+          requires:
+            - build
       - deploy:
           requires:
             - build
