@@ -59,9 +59,9 @@ jobs:
       - image: cimg/openjdk:17.0.1
     steps:
       - heroku/deploy-via-git:
-          - filters:
-              - branches:
-                 only: master
+      - filters:
+          branches:
+            only: master
       - run:
           name: Run Application
           command: java -Xmx512m -Xms256m -jar demo-0.0.1-SNAPSHOT.jar
