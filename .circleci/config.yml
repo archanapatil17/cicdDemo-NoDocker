@@ -15,10 +15,6 @@ workflows:
             - build
             - test
             - heroku/deploy-via-git
-
-
-
-
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
          # post-steps:
            # - run:
@@ -65,4 +61,4 @@ jobs:
           #  only: master
       - run:
           name: Run Application
-          command: java -Xmx512m -Xms256m -jar demo-0.0.1-SNAPSHOT.jar
+          command: java -Xmx512m -Xms256m -jar build/libs/demo-0.0.1-SNAPSHOT.jar
