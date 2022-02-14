@@ -14,14 +14,6 @@ workflows:
           requires:
            - build
            - test
-          parameters:
-            api-key:
-              default: HEROKU_API_KEY
-              description: The name of the environment variable containing your Heroku API Key.
-              type: env_var_name
-            app-name:
-              default: $HEROKU_APP_NAME
-              type: string
           filters:
             branches:
               only: master
