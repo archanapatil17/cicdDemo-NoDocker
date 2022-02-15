@@ -16,7 +16,7 @@ workflows:
            - test
           filters:
             branches:
-              only: master
+              only: master # Only deploy when the commit is on the master branch
 
 jobs:
   build:
